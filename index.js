@@ -39,16 +39,20 @@ client.connect((err) => {
    
   })
   //Delete item from admin panel
-  app.post('/delete', (req, res) =>
+  app.delete('/delete/:id', (req, res) =>
   {
-    const user = req.body.id;
-    const id=ObjectID(req.body.id)
+    // const user = req.body.id;
+    const id=ObjectID(req.params.id)
     collection.deleteOne({ _id: id })
-      .then(response =>
-      {
-      res.send('ok')
-    })
-    console.log(id)
+   .then(result=>{
+     console.log(result.deletedCount)
+     if(result.deletedCount>0){
+       res.send(result.deletedCount)
+     }
+   })
+
+  
+    
 })
 
   //showing Order
